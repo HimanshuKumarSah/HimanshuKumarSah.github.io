@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bubbles.css">
+    <title>Bubbles</title>
+</head>
+<body>
+    <a href="index.html" class="button">Back</a>
+    <div class="box">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const box = document.querySelector(".box ul");
+            let lastLeft = -30;
+            let bubbleCount = 0;
+            const maxBubbles = 30;
+
+            function createBubble() {
+                if (bubbleCount >= maxBubbles) return;
+
+                let li = document.createElement("li");
+                let randomLeft;
+
+                do {
+                    randomLeft = Math.random() * 100;
+                } while (Math.abs(randomLeft - lastLeft) < 5);
+
+                let randomDuration = 10 + Math.random() * 5; 
+                let randomDelay = Math.random() * 5;
+                
+                li.style.left = `${randomLeft}%`;
+                li.style.animation = `animate ${randomDuration}s cubic-bezier(0.25, 1, 0.5, 1) infinite`;
+                li.style.animationDelay = `${randomDelay}s`;
+
+                box.appendChild(li);
+                bubbleCount++;
+                lastLeft = randomLeft;
+
+                li.addEventListener("animationend", () => {
+                    li.remove();
+                    bubbleCount--;
+                });
+
+                setTimeout(createBubble, 880 + Math.random() * 1200);
+            }
+            createBubble();
+        });
+    </script>
+</body>
+</html>
